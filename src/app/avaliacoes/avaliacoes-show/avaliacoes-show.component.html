@@ -1,0 +1,33 @@
+<h3 class="box-title">Avaliação</h3>
+
+
+<div class="accordion" id="accordionExample">
+  
+    <div class="card card-ajust">
+      <div class="card-header" id="headingOne">
+        {{avaliacao.referencia}}
+      </div>
+      
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          
+            <table class="table table-striped">
+              <thead>
+                <th style="width: 270px;">Cliente</th>
+                <th style="width: 70px;">Nota</th>
+                <th>Motivo</th>
+              </thead>
+              <tbody *ngFor="let c of avaliacao.clientes">
+                <td>{{c.nome}}</td>
+                <td>{{c.nps}}</td>
+                <td>{{c.motivo}}</td>
+              </tbody>
+            </table>
+
+          
+        </div>
+      </div>
+    </div>
+      
+</div>
+

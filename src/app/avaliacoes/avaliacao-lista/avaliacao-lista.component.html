@@ -1,0 +1,114 @@
+<h3 class="box-title">Lista de avaliações</h3>
+<ng-container *ngIf="avaliacoes.length === 0; else elseTemplate">
+    Sem avaliações cadastradas
+</ng-container>
+<ng-template #elseTemplate>
+
+<div class="accordion" id="accordionExample">
+  
+  <ng-container *ngFor="let item of avaliacoes">
+    
+    <div class="card card-ajust">
+      <div class="card-header" id="headingOne">
+        {{formatDateRef(item.referencia)}}
+      </div>
+      
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          
+
+            <table class="table table-striped">
+                <thead>
+                  <th style="width: 280px;">Cliente</th>
+                  <th style="width: 120px;">Nota</th>
+                  <th style="width: 500px;">Motivo</th>
+                  <th>Copiar link para avaliação</th>
+                </thead>
+                <tbody *ngFor="let c of item.clientes">
+                  <td>
+                      <ng-container *ngIf="c.nps; then semLink; else comLink">
+                      </ng-container>
+                      <ng-template #comLink>
+                        <a [routerLink]="[ '/avaliacoes/executar', item.id, c.id  ]">
+                          {{c.nome}}
+                        </a>
+                      </ng-template>
+                      
+                      <ng-template #semLink>
+                        {{c.nome}}
+                      </ng-template>
+                  </td>
+                  <td>
+                      <span *ngIf="c.nps; else naoAvaliado"> {{c.nps}}</span>
+                  </td>
+                  <td>
+                      <span *ngIf="c.nps; else naoAvaliado"> {{c.motivo}}</span>
+                  </td>
+                  <td>
+                      <div *ngIf="!c.nps; else jaAvaliado" >
+                          <button 
+                          (click)="copyLinkToPaste(item.id, c.id)"><i class="fa fa-copy"></i></button>
+                      </div>
+                  </td>
+                </tbody>
+              </table>
+
+<!--
+          <ng-container *ngFor="let c of item.clientes">
+
+            <div class="row">
+              <div class="col-md-3">
+                <ng-container *ngIf="c.nps; then semLink; else comLink">
+                </ng-container>
+              </div>
+              <ng-template #comLink>
+                <a [routerLink]="[ '/avaliacoes/executar', item.id, c.id  ]">
+                  {{c.nome}}
+                </a>
+              </ng-template>
+              
+              <ng-template #semLink>
+                {{c.nome}}
+              </ng-template>
+              
+              <div class="col-md-3">
+                Nota: 
+                <span *ngIf="c.nps; else naoAvaliado"> {{c.nps}}</span>
+              </div>
+              <div class="col-md-3">
+                Motivo:
+                <span *ngIf="c.nps; else naoAvaliado"> {{c.motivo}}</span>
+                
+              </div>
+              <div class="col-md-3">
+                <div *ngIf="!c.nps; else jaAvaliado" >
+                  Copiar link para avaliação:
+                  <button 
+                  (click)="copyLinkToPaste(item.id, c.id)"><i class="fa fa-copy"></i></button>
+                </div>
+              </div>
+            </div>
+          </ng-container>-->
+          
+        </div>
+      </div>
+    </div>
+    
+  </ng-container>
+  
+</div>
+
+<ng-template #naoAvaliado>
+  <span style="color: red;">
+      Não avaliado
+    </span>
+  </ng-template>
+  
+  <ng-template #jaAvaliado>
+    <span style="color: green;">
+        Já avaliado
+      </span>
+  </ng-template>
+
+
+</ng-template>
